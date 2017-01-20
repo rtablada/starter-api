@@ -1,16 +1,11 @@
 'use strict';
 
 const Lucid = use('Lucid');
-const _ = require('underscore');
+const guarded = require('./guard-mixin');
 
 class User extends Lucid {
-
   apiTokens() {
     return this.hasMany('App/Model/Token');
-  }
-
-  static get unguarded() {
-    return false;
   }
 
   static get fillable() {
@@ -19,25 +14,8 @@ class User extends Lucid {
       'password',
     ];
   }
-
-  static get guarded() {
-    return [];
-  }
-
-  isFillable(key) {
-    return this.constructor.unguarded ||
-      this.constructor.fillable.includes(key) ||
-      (this.constructor.fillable.length === 0 && !this.constructor.guarded.includes(key));
-  }
-
-  setJSON(values) {
-    _.each(values, (value, key) => {
-      if (this.isFillable(key)) {
-        this.attributes[key] = this.mutateProperty(key, value);
-      }
-    });
-  }
-
 }
+
+guarded(User);
 
 module.exports = User;
