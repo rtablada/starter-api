@@ -118,6 +118,8 @@ const commands = [
   'AdonisGenerators/Generate:Controller',
   'AdonisGenerators/Generate:JsonApiView',
   'AdonisGenerators/Generate:JsonApiResource',
+
+  'App/Commands/AddAdminUser',
 ];
 
 module.exports = { providers, aceProviders, aliases, commands };
